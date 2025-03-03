@@ -47,6 +47,7 @@ h1 {
     gap: 10px;
     margin-right: 40px;
 }
+
 /* Chips Stacking Effect with Styled Border and Shadow */
 .chips {
     display: flex;
@@ -139,47 +140,44 @@ h1 {
     display: flex;
     gap: 10px;
     position: absolute;
-    top: 40%;
-    left: 40%;
-    transform: translateX(-50%);
+    top: 30%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+    justify-content: center;
+    width: 80%;
+    z-index: 5;
 }
 
-/* Card Styling */
+/* Community cards styling - no hover needed */
+.community-cards .card {
+    cursor: default;
+}
+
+/* Face up card style - always showing front */
+.card.face-up {
+    transform: rotateY(180deg);
+}
+
+/* Prevent hover effect on face-up community cards */
+.card.face-up:hover {
+    transform: rotateY(180deg);
+}
+
+/* Card Flipping Styles */
 .card {
     width: 70px;
     height: 100px;
     position: relative;
     transform-style: preserve-3d;
-    transition: transform 0.6s ease, box-shadow 0.3s ease;
+    transition: transform 0.6s ease;
     cursor: pointer;
     perspective: 1000px;
-    background-color: #fff;
-    color: #000;
-    border-radius: 8px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    border: 1px solid #ddd;
-    font-family: "Times New Roman", serif;
 }
 
-/* Initially hide the front of opponent cards */
-.opponent-cards .card {
+.card:hover {
     transform: rotateY(180deg);
-    position: relative;
 }
 
-/* Flip cards when hovered */
-.player-2-cards:hover .card,
-.player-3-cards:hover .card,
-.player-4-cards:hover .card {
-    transform: rotateY(0deg);
-}
-
-/* Ensure P1's cards are always visible */
-.main-player .card {
-    transform: rotateY(0deg);
-}
-
-/* Card front & back styles */
 .card-front, .card-back {
     position: absolute;
     width: 100%;
@@ -192,40 +190,29 @@ h1 {
     align-items: center;
 }
 
-/* Ensure front of opponent cards is hidden by default */
 .card-front {
     background-color: #fff;
     color: #000;
     border: 2px solid #ddd;
     font-family: "Times New Roman", serif;
-    font-size: 24px;
     transform: rotateY(180deg);
+    font-size: 24px;
 }
 
-/* Back of the cards (now blank) */
 .card-back {
-    background-color: #d32f2f; /* You can change this to any solid color */
+    background-color: #d32f2f;
+    background-image: linear-gradient(45deg, #b71c1c 25%, transparent 25%),
+                      linear-gradient(-45deg, #b71c1c 25%, transparent 25%),
+                      linear-gradient(45deg, transparent 75%, #b71c1c 75%),
+                      linear-gradient(-45deg, transparent 75%, #b71c1c 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
     border: 2px solid #fff;
     transform: rotateY(0deg);
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
-/* Hide text (suit and number) on the back */
-.card-back::before,
-.card-back::after {
-    content: "";
-    display: none;
-}
-
-/* Ensure only the back of opponent cards is visible */
-.opponent-cards .card .card-front {
-    display: none;
-}
-
-/* Corner pips */
-.card::before {
+/* Corner pips on front face */
+.card-front::before {
     content: attr(data-value);
     position: absolute;
     top: 5px;
@@ -233,7 +220,7 @@ h1 {
     font-size: 16px;
 }
 
-.card::after {
+.card-front::after {
     content: attr(data-value);
     position: absolute;
     bottom: 5px;
@@ -241,14 +228,6 @@ h1 {
     font-size: 16px;
     transform: rotate(180deg);
 }
-
-.card[data-value*="♥"]::before,
-.card[data-value*="♥"]::after,
-.card[data-value*="♦"]::before,
-.card[data-value*="♦"]::after {
-    color: red;
-}
-
 
 .players {
     position: absolute;
@@ -267,9 +246,53 @@ h1 {
     position: absolute;
 }
 
-.player-1 { top: 85%; left: 40%; }
-.player-3 { top: 10%; left: 40%; }
-.player-2 { top: 40%; right: 90%; }
+/* Player cards styling */
+.player-cards {
+    position: absolute;
+    display: flex;
+    gap: 5px;
+}
+
+.player-cards .card {
+    width: 45px;  /* Smaller than main player cards */
+    height: 65px;
+    cursor: pointer;  /* Changed from default to pointer */
+    transform-style: preserve-3d;
+}
+
+/* Position player cards relative to their circles */
+.player-1 .player-cards {
+    top: -10px;
+    left: 70px;
+    transform: rotate(-15deg);
+}
+
+.player-2 .player-cards {
+    top: -10px;
+    right: 70px;
+    transform: rotate(15deg);
+}
+
+.player-3 .player-cards {
+    top: -10px;
+    left: 70px;
+    transform: rotate(-15deg);
+}
+
+.player-4 .player-cards {
+    top: -10px;
+    right: 70px;
+    transform: rotate(15deg);
+}
+
+/* Remove the face-down forcing styles */
+.player-cards .card:hover {
+    transform: rotateY(180deg);
+}
+
+.player-1 { top: 10%; left: 20%; }
+.player-2 { top: 10%; right: 20%; }
+.player-3 { top: 40%; left: 10%; }
 .player-4 { top: 40%; right: 10%; }
 
 .main-player {
@@ -280,52 +303,6 @@ h1 {
     display: flex;
     gap: 10px;
     align-items: center;
-}
-
-.player-2-cards {
-    position: absolute;
-    top: 5%;
-    right: 45%;
-    display: flex;
-    gap: 5px;
-}
-
-.player-3-cards {
-    position: absolute;
-    top: 40%;
-    left: 11%;
-    display: flex;
-    gap: 5px;
-}
-
-.player-4-cards {
-    position: absolute;
-    top: 40%;
-    right: 14%;
-    display: flex;
-    gap: 5px;
-}
-
-.chips {
-    display: flex;
-    flex-direction: column-reverse;
-    gap: 5px;
-}
-
-.chip {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease;
-}
-
-.chip-1 { background-color: #d32f2f; }
-.chip-2 { background-color: #0288d1; }
-.chip-3 { background-color: #388e3c; }
-
-.chip:hover {
-    transform: translateY(-10px) scale(1.2);
 }
 
 .game-buttons {
