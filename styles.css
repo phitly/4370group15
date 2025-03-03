@@ -47,6 +47,55 @@ h1 {
     gap: 10px;
     margin-right: 40px;
 }
+/* Chips Stacking Effect with Styled Border and Shadow */
+.chips {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 5px;
+    position: relative;
+}
+
+.chip {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 2px solid #fff;
+}
+
+.chip:nth-child(1) { top: 0px; }
+.chip:nth-child(2) { top: 12px; }
+.chip:nth-child(3) { top: 24px; }
+
+.chip-1 { background-color: #d32f2f; }
+.chip-2 { background-color: #0288d1; }
+.chip-3 { background-color: #388e3c; }
+
+.chip:hover {
+    transform: translateY(-10px) scale(1.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Fade-In Effect */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.game-screen, .poker-table, .community-cards, .game-buttons {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-in-out forwards;
+}
 
 /* Homepage */
 .poker-table {
