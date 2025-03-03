@@ -217,7 +217,7 @@ h1 {
 
 /* Settings */
 .settings {
-    width: 80%;
+    width: 50%;
     margin: 100px auto;
     display: flex;
     flex-direction: column;
