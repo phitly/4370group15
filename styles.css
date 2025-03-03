@@ -335,7 +335,27 @@ h1 {
     display: flex;
     gap: 10px;
 }
+/* Hide opponent cards by default */
+.opponent-cards .card {
+    background-color: #d32f2f;
+    border: 2px solid #fff;
+    color: transparent;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
 
+/* Ensure P1's cards are visible */
+.main-player .card {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #ddd;
+}
+
+.opponent-cards .card:hover {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #ddd;
+}
 /* Leaderboard */
 .leaderboard {
     width: 80%;
